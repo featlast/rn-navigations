@@ -10,7 +10,6 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import * as Font from "expo-font";
 import { useFonts, Margarine_400Regular } from "@expo-google-fonts/margarine";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -24,23 +23,6 @@ const CustomDrawer = (props) => {
   if (!fontsLoaded) {
     return <View />;
   }
-  // const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  // useEffect(() => {
-  //   if (!fontsLoaded) {
-  //     loadFonts();
-  //   }
-  // }, []);
-
-  // const loadFonts = async () => {
-  //   await Font.loadAsync({
-  //     "Roboto-Medium": require("../fonts/Roboto-Medium.ttf"),
-  //   });
-  //   setFontsLoaded(true);
-  // };
-  // if (!fontsLoaded) {
-  //   return <View />;
-  // }
 
   return (
     <DrawerContentScrollView
