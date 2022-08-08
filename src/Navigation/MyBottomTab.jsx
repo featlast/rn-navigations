@@ -33,6 +33,16 @@ const MyBottomTab = () => {
               />
             </Pressable>
           ),
+          headerRight: () => (
+            <Pressable onPress={() => navigation.navigate("Settings")}>
+              <FontAwesome
+                name="cog"
+                size={24}
+                color={Colors.secondary}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
           tabBarIcon: ({ color }) => (
             <FontAwesome name="home" size={24} color={color} />
           ),
@@ -52,9 +62,10 @@ const MyBottomTab = () => {
               />
             </Pressable>
           ),
+
           tabBarBadge: 4,
           tabBarBadgeStyle: {
-            backgroundColor: "greenyellow",
+            backgroundColor: "red",
             color: Colors.ligth,
           },
           tabBarShowLabel: false,
