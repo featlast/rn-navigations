@@ -13,4 +13,14 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.secondary,
   },
+  simpleContainer: {
+    flex: 1,
+    backgroundColor: Colors.ligth,
+  },
+  simpleTitle: {
+    marginLeft: 10,
+    fontSize: 32,
+    fontWeight: "bold",
+    color: Colors.secondary,
+  },
 });

@@ -6,6 +6,7 @@ import Profile from "../Screens/Profile";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "../Constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import MyTopTab from "./MyTopTab";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,15 +14,15 @@ const MyBottomTab = () => {
   const navigation = useNavigation();
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="TopTab"
       screenOptions={{
         headerTitleAlign: "center",
         tabBarActiveTintColor: Colors.secondary,
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="TopTab"
+        component={MyTopTab}
         options={{
           headerLeft: () => (
             <Pressable onPress={() => navigation.openDrawer()}>
