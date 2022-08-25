@@ -1,27 +1,51 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { globalStyles } from "../Style/Global";
 import { Button } from "react-native";
 import AddContacts from "../Components/AddContacts";
 import ContactList from "../Components/ContactList";
+import { contactReducer } from "../reducers/contacReducer";
 
 export default Contacts = () => {
-  const [contacts, setContacts] = useState(initialContacts);
+  //Estado empleando useState
+  //const [contacts, setContacts] = useState(initialContacts);
 
+  //Estado empleando el useReducer
+const [contacts, dispatch] = useReducer(contactReducer,initialContacts)
+/**USE REDUCER */
   /**Metodo para agregar un contacto */
   const handleAddContact = (name) => {
-    setContacts([...contacts, { id: nextIde++, name }]);
+    dispatch({type:'ADD', id: nextIde++, name})
+    //setContacts([...contacts, { id: nextIde++, name }]);
   };
 
   /**Metodo para eliminar un contacto */
   const handleDeleteContact = (id) => {
-    setContacts(contacts.filter((contact) => contact.id !== id));
+    dispatch({type: 'DELETE', id})
+    //setContacts(contacts.filter((contact) => contact.id !== id));
   };
 
   /**Metodo para editar nuestro usuario */
   const handleChangeContact = (contact) => {
-    setContacts(contacts.map((c) => (c.id === contact.id ? contact : c)));
+    dispatch({type:'CHANGE', contact})
+    //setContacts(contacts.map((c) => (c.id === contact.id ? contact : c)));
   };
+
+/**UseSTATE */
+    // /**Metodo para agregar un contacto */
+    // const handleAddContact = (name) => {
+    //   setContacts([...contacts, { id: nextIde++, name }]);
+    // };
+  
+    // /**Metodo para eliminar un contacto */
+    // const handleDeleteContact = (id) => {
+    //   setContacts(contacts.filter((contact) => contact.id !== id));
+    // };
+  
+    // /**Metodo para editar nuestro usuario */
+    // const handleChangeContact = (contact) => {
+    //   setContacts(contacts.map((c) => (c.id === contact.id ? contact : c)));
+    // };
 
   return (
     <View style={globalStyles.simpleContainer}>
