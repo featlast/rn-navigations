@@ -2,13 +2,15 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import MyInput from "../Components/MyInput";
 import { Colors } from "../Constants/Colors";
+import { contactsStore } from "../reducers/contacReducer";
 
-export default AddContacts = ({ onAddContact }) => {
+export default AddContacts = () => {
+  const { handleAddContact } = React.useContext(contactsStore)
   const [name, setName] = useState("");
 
   const handleAdd = () => {
     setName("");
-    onAddContact(name);
+    handleAddContact(name);
   };
 
   return (

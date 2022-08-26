@@ -12,27 +12,24 @@ import MyInput from "./MyInput";
 import { getRandomPhoto } from "../utils/randomPhoto";
 import { Colors } from "../Constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { contactsStore } from "../reducers/contacReducer";
 
-export default ContactList = ({
-  contacts,
-  onChangeContact,
-  onDeleteContact
-}) => {
+export default ContactList = () => {
+  const { contacts } = React.useContext(contactsStore)
   return (
     <ScrollView>
       {contacts.map((contact, index) => (
         <Contact
           key={index}
           contact={contact}
-          onChange={onChangeContact}
-          onDelete={onDeleteContact}
         />
       ))}
     </ScrollView>
   );
 };
 
-function Contact({ contact, onChange, onDelete }) {
+function Contact({ contact}) {
+const { handleChangeContact, handleDeleteContact } = React.useContext(contactsStore)
   const [isEditing, setIsEditing] = useState(false);
   const memoPhoto = useMemo(() => getRandomPhoto(), []);
   let contactContainer;
@@ -41,7 +38,7 @@ function Contact({ contact, onChange, onDelete }) {
       <View>
         <MyInput
           value={contact.name}
-          onChangeText={(text) => onChange({ ...contact, name: text })}
+          onChangeText={(text) => handleChangeContact({ ...contact, name: text })}
         />
       </View>
     );
@@ -71,7 +68,7 @@ function Contact({ contact, onChange, onDelete }) {
             />
           </Pressable>
         )}
-        <Pressable onPress={() => onDelete(contact.id)}>
+        <Pressable onPress={() => handleDeleteContact(contact.id)}>
           <FontAwesome
             name="trash"
             size={24}
