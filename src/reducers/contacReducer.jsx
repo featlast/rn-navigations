@@ -1,22 +1,37 @@
 /**agregando Context */
 import * as React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-let nextIde = 3;
+// let nextIde = 3;
 const initialContacts = [
   { id: 0, name: "Sara Lee" },
   { id: 1, name: "John Doe" },
   { id: 2, name: "Jack Lee" }
 ];
 
-const contactsStore = React.createContext(initialContacts)
+const contactsStore = React.createContext([])
 const { Provider } = contactsStore
 
 function ContactsProvider ({ children }){
-  const [contacts, dispatch] = React.useReducer(contactReducer,initialContacts)
+  const [contacts, dispatch] = React.useReducer(contactReducer,[])
   /**USE REDUCER */
+
+React.useEffect(()=>{
+  getContacts()
+},[])
+
+async function getContacts (){
+  const contacts = await AsyncStorage.getItem('@contacts')
+  if(contacts === null){
+    await AsyncStorage.setItem('@contacts', JSON.stringify(initialContacts))
+    dispatch({type:'SET_CONTACTS', contacts: initialContacts})
+  }else{
+    dispatch({type: 'SET_CONTACTS', contacts: JSON.parse(contacts)})
+  }
+}
   /**Metodo para agregar un contacto */
   const handleAddContact = (name) => {
-    dispatch({type:'ADD', id: nextIde++, name})
+    dispatch({type:'ADD', id: Math.random(), name})
     //setContacts([...contacts, { id: nextIde++, name }]);
   };
 
@@ -51,14 +66,26 @@ export function contactReducer (contacts, action) {
 
   /**Uso de Switch Case */
   switch (action.type) {
+    case 'SET_CONTACTS': {
+      return action.contacts;
+    }
     case 'ADD': {
-      return [...contacts, { id: action.id, name:action.name }] 
+      const newContacts = [...contacts, { id: action.id, name:action.name }]
+      const jsonValue = JSON.stringify(newContacts)
+      AsyncStorage.setItem('@contacts', jsonValue)
+      return  newContacts;
     }
     case 'DELETE':{ 
-      return contacts.filter((contact) => contact.id !== action.id) 
+      const newContacts = contacts.filter((contact) => contact.id !== action.id)
+      const jsonValue= JSON.stringify(newContacts)
+      AsyncStorage.setItem('@contacts', jsonValue)
+      return  newContacts
     }
     case 'CHANGE':{ 
-      return contacts.map((c) => (c.id === action.contact.id ? action.contact : c)) 
+      const newContacts = contacts.map((c) => (c.id === action.contact.id ? action.contact : c))
+      const jsonValue = JSON.stringify(newContacts)
+      AsyncStorage.setItem('@contacts',jsonValue)
+      return  newContacts
     }
     default:{
       throw new Error ('Unknow action type: ' + action.type)
